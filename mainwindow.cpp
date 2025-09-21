@@ -144,7 +144,6 @@ void MainWindow::generateScene()
                     square.neighbors.push_back(square.index + offset[i]);
             }
         }
-        for (int i = 0; i < square.neighbors.size(); i++) qDebug() << square.index << square.neighbors[i];
     }
 
     view->setSceneRect(0, 0, squareSize * cols, squareSize * rows);
