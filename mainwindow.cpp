@@ -135,8 +135,8 @@ void MainWindow::generateScene()
             bool conditions[] = {                     // условия добавления соседей
                 (square.index % cols > 0),
                 (square.index % cols < cols - 1),
-                (square.index / rows > 0),
-                (square.index / rows < rows - 1)
+                (square.index / cols > 0),
+                (square.index / cols < rows - 1)
             };
             int offset[] = { -1, 1, -cols, cols };    // расположение соседей
             for (int i = 0; i < 4; i++) {
@@ -144,6 +144,7 @@ void MainWindow::generateScene()
                     square.neighbors.push_back(square.index + offset[i]);
             }
         }
+        for (int i = 0; i < square.neighbors.size(); i++) qDebug() << square.index << square.neighbors[i];
     }
 
     view->setSceneRect(0, 0, squareSize * cols, squareSize * rows);
