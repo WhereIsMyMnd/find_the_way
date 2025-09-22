@@ -252,7 +252,7 @@ void MainWindow::setMousePath(QPointF pos)
 // отрисовка выбранного пути
 void MainWindow::paintLine(std::vector<int> path, PathType type)
 {
-    if (path.empty() && type == AB_PATH) {                             // окно с сообщение, в случае невозможности найти путь (А->В)
+    if (path.empty() && type == AB_PATH) {                             // окно с сообщением, в случае невозможности найти путь (А->В)
         QMessageBox message;
         message.setIcon(QMessageBox::Warning);
         message.setText("Невозможно дойти из А до В");
