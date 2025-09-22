@@ -99,6 +99,7 @@ void MainWindow::restoreSettings()
 // генерация поля
 void MainWindow::generateScene()
 {
+    ftw->stop = true;                     // флаг остановки вычисления пути, если путь не был вычислен до перегенерации поля
     scene->clear();                       // сброс сцены и сопутствующих параметров
     squares.clear();
     mainLine.clear();
@@ -108,7 +109,6 @@ void MainWindow::generateScene()
     squares.resize(rows * cols);
     start = -1;
     finish = -1;
-    ftw->stop = true;                     // флаг остановки вычисления пути, если путь не был вычислен до перегенерации поля
 
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
@@ -130,18 +130,23 @@ void MainWindow::generateScene()
         }
     }
 
+    neighbors.clear();
+    neighbors.resize(squares.size());
+
     for (auto &square : squares) {                    // установка соседей для точки
         if (square.state != BLOCKED) {
+            int idx = square.index;
             bool conditions[] = {                     // условия добавления соседей
-                (square.index % cols > 0),
-                (square.index % cols < cols - 1),
-                (square.index / cols > 0),
-                (square.index / cols < rows - 1)
+                (idx % cols > 0),
+                (idx % cols < cols - 1),
+                (idx / cols > 0),
+                (idx / cols < rows - 1)
             };
             int offset[] = { -1, 1, -cols, cols };    // расположение соседей
             for (int i = 0; i < 4; i++) {
-                if (conditions[i] && squares[square.index + offset[i]].state != BLOCKED)
-                    square.neighbors.push_back(square.index + offset[i]);
+                int neighbor = idx + offset[i];
+                if (conditions[i] && squares[neighbor].state != BLOCKED)
+                    neighbors[idx].push_back(neighbor);
             }
         }
     }
@@ -209,7 +214,7 @@ void MainWindow::setPoints(int idx)
     }
 
     if (start != -1 && finish != -1) {
-        emit findTheWay(squares, start, finish, AB_PATH);
+        emit findTheWay(neighbors, start, finish, AB_PATH);
     }
 }
 
@@ -240,7 +245,7 @@ void MainWindow::setMousePath(QPointF pos)
         }
         mouseLine.clear();
 
-        emit findTheWay(squares, start, mousePosIdx, MOUSE_PATH);
+        emit findTheWay(neighbors, start, mousePosIdx, MOUSE_PATH);
     }
 }
 

@@ -8,7 +8,6 @@ typedef struct {
     SelectableRectItem* item;
     int state;
     int index;
-    std::vector<int> neighbors;
 } Squares;
 
 // состояние айтемов на сцене

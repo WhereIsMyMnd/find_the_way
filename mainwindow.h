@@ -24,7 +24,7 @@ public:
     ~MainWindow();
 
 signals:
-    void findTheWay(const std::vector<Squares> &field, int start, int finish, PathType type);
+    void findTheWay(const std::vector<std::vector<int>> squareNeighbors, int start, int finish, PathType type);
 
 private:
     Ui::MainWindow *ui;
@@ -33,6 +33,7 @@ private:
     FtwView* view;
     QSpinBox *widthSpBox, *heightSpBox;
     std::vector<Squares> squares;
+    std::vector<std::vector<int>> neighbors;
     QPushButton *pointABtn, *pointBBtn;
     FindTheWay* ftw;
     int start = -1, finish = -1;

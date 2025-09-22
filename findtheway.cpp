@@ -9,12 +9,12 @@
 FindTheWay::FindTheWay()
 {}
 
-// вычисление пути
-void FindTheWay::findTheWay(const std::vector<Squares> &field, int start, int finish, PathType type)
+// вычисление пути (передача копии вектора, вместо указателя для потокобезопасности)
+void FindTheWay::findTheWay(const std::vector<std::vector<int>> neighbors, int start, int finish, PathType type)
 {
     stop = false;
 
-    int maxWay = field.size();
+    int maxWay = neighbors.size();
     std::vector<int> dist(maxWay, -1);
     std::vector<int> parent(maxWay, -1);
     std::queue<int> q;
@@ -26,7 +26,7 @@ void FindTheWay::findTheWay(const std::vector<Squares> &field, int start, int fi
 
         int node = q.front();
         q.pop();
-        for (auto neighbor : field[node].neighbors) {
+        for (auto neighbor : neighbors[node]) {
             if (dist[neighbor] == -1) {
                 dist[neighbor] = dist[node] + 1;
                 parent[neighbor] = node;
