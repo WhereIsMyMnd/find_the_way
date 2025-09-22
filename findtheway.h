@@ -20,5 +20,5 @@ signals:
 
 public slots:
     // вычисление пути
-    void findTheWay(const std::vector<Squares>& field, int start, int finish, PathType type);
+    void findTheWay(const std::vector<std::vector<int>> neighbors, int start, int finish, PathType type);
 };
