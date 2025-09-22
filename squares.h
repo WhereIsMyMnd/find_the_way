@@ -1,4 +1,4 @@
-// вспомогательный средства
+// вспомогательные средства
 #pragma once
 
 #include "selectablerectitem.h"
